@@ -1,26 +1,42 @@
-import { Mascota } from "./Mascota"
+import { Mascota, Perro } from "./Mascota"
 import form from "./form-mascota.html?raw"
 
 export function mascotaApp (element){
   let texthtml = form
   element.innerHTML+=texthtml
-  document.getElementById("form-mascota").addEventListener("submit", (e) => {
+  let formMascota = document.getElementById("form-mascota") 
+  formMascota.addEventListener("submit", (e) => {
     e.preventDefault()
-    let type = document.getElementsByName("type")[0].value
-    let name = document.getElementsByName("name")[0].value
-    let microchip = document.getElementsByName("microchip")[0].value
-    let gender = document.querySelector('input[name="gender"]:checked').value
-    let age = document.getElementsByName("age")[0].value
+    let type = formMascota.type.value
+    let name = formMascota.name.value
+    let microchip = formMascota.microchip.value
+    let gender = formMascota.gender.value
+    let age = formMascota.age.value
+    let raza = formMascota.raza.value
+    let alimentacion = formMascota.alimentacion.value
+    let peso = formMascota.peso.value
     let mascota = null
     if(notEmpty(type)&&notEmpty(name)&&notEmpty(microchip)&&notEmpty(gender)&&notEmpty(age))
-      mascota = new Mascota(type,name,microchip,gender,age)
+      mascota = new Mascota(type.trim(),name.trim(),microchip.trim(),gender,age)
     else
       mascota = new Mascota()
-    document.getElementById("form-mascota").innerHTML += mascota.getData()
+    let perro
+    if(notEmpty(raza)&&notEmpty(alimentacion)&&notEmpty(peso))
+      perro = new Perro(type,name,microchip,gender,age,raza,peso,alimentacion)
+    else
+      perro = new Perro()
+    document.getElementById("content").innerHTML += mascota.getData()
+    document.getElementById("content").innerHTML += perro.getData()
   }) 
   document.getElementById("range-edad").addEventListener("input", (e) => {
     let edad = e.currentTarget.value
     document.getElementsByName("age")[0].value = edad
+  })
+  document.getElementById("select").addEventListener("change", () => {
+    if(document.getElementById("select").value === "perro")
+      document.getElementById("perro").classList.remove("oculto")
+    else
+      document.getElementById("perro").classList.add("oculto")
   })
 }
 
