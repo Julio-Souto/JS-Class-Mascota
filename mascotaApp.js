@@ -27,6 +27,8 @@ export function mascotaApp (element){
       perro = new Perro()
     document.getElementById("content").innerHTML += mascota.getData()
     document.getElementById("content").innerHTML += perro.getData()
+    console.log(mascota.getObject())
+    console.log(perro.getObject())
   }) 
   document.getElementById("range-edad").addEventListener("input", (e) => {
     let edad = e.currentTarget.value

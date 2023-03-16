@@ -1,5 +1,4 @@
 export class Mascota{
-  static count = 0
   #id = 0
   tipo = "Canido"
   name = "Desconocido"
@@ -16,7 +15,7 @@ export class Mascota{
    * @param {*} edad 
    */
   constructor(tipo = "Canido",name = "Desconocido",microchip = "",gender = "f",edad = 0){
-    this.#id=++this.constructor.count
+    this.#id=this.uniqueId()
     this.tipo=tipo
     this.name=name
     this.microchip=microchip
@@ -26,7 +25,7 @@ export class Mascota{
   
   getData(){
     return `<ul style="text-align:left;">
-      <li>ID: ${this.#id}</li>
+      <li>ID: ${this.getId()}</li>
       <li>Type: ${this.tipo}</li>
       <li>Name: ${this.name}</li>
       <li>Microchip: ${this.microchip}</li>
@@ -35,8 +34,19 @@ export class Mascota{
     </ul>`
   }
 
+  getObject(){
+    return {
+      ...this,
+      id: this.getId()
+    }
+  }
+
   getId(){
     return this.#id
+  }
+
+  uniqueId(){
+    return Math.floor(Math.random() * Math.floor(Math.random() * Date.now())).toString().substring(0,10)
   }
 
   setName(name){
@@ -62,7 +72,7 @@ export class Perro extends Mascota{
 
   getData(){
     return `<ul style="text-align:left;">
-      <li>ID: ${super.getId()}</li>
+      <li>ID: ${this.getId()}</li>
       <li>Type: ${this.tipo}</li>
       <li>Name: ${this.name}</li>
       <li>Microchip: ${this.microchip}</li>
@@ -72,5 +82,12 @@ export class Perro extends Mascota{
       <li>Peso: ${this.peso}</li>
       <li>Alimentacion: ${this.alimentacion}</li>
     </ul>`
+  }
+
+  getObject(){
+    return {
+      ...this,
+      id: this.getId()
+    }
   }
 }
